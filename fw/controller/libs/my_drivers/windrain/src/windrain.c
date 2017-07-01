@@ -24,14 +24,22 @@ static uint32_t speed_ticks;
 static uint32_t last_speed_ticks;
 static uint32_t wind_speed;
 
+static uint32_t rain_ticks;
+static uint32_t last_rain_ticks;
+static uint32_t rain;
+
 /* The timer callout */
 static struct os_callout wind_speed_callout;
+static struct os_callout rain_callout;
 
 #define WIND_DIR_ADC_CH 0
 
 #define WIND_SPEED_PIN 28
+#define RAIN_PIN 29
 
 #define WIND_SPEED_PERIOD (2 * OS_TICKS_PER_SEC)
+
+#define RAIN_PERIOD (60 * OS_TICKS_PER_SEC)
 
 // Lookup table to get wind direction from voltage
 static const wind_dir_t wind_dir_lut[] = {
@@ -88,9 +96,41 @@ static void wind_speed_ev_cb(struct os_event *ev)
     os_callout_reset(&wind_speed_callout, WIND_SPEED_PERIOD);
 }
 
+// Periodic function that computes and updates wind speed
+static void rain_ev_cb(struct os_event *ev)
+{
+    assert(ev != NULL);
+
+    static uint32_t last_rain = UINT32_MAX;
+
+    if (last_rain_ticks != rain_ticks) {
+        uint32_t ticks;
+        ticks = rain_ticks - last_rain_ticks;
+        last_rain_ticks = rain_ticks;
+
+        // 0.2794 mm per tick
+        rain = ticks * 2794;
+    } else {
+        rain = 0;
+    }
+
+    if(rain != last_rain) {
+        console_printf("rain: %ld.%ld mm\n", rain/10000, rain - (rain/10000) * 10000);
+        last_rain = rain;
+    }
+
+
+    os_callout_reset(&rain_callout, RAIN_PERIOD);
+}
+
 static void wind_speed_irq(void *arg) {
     // TODO - add debounce
     speed_ticks++;
+}
+
+static void rain_irq(void *arg) {
+    // TODO - add debounce
+    rain_ticks++;
 }
 
 void windrain_init(void) {
@@ -107,10 +147,19 @@ void windrain_init(void) {
 
     os_callout_reset(&wind_speed_callout, WIND_SPEED_PERIOD);
 
+    os_callout_init(&rain_callout, os_eventq_dflt_get(),
+                    rain_ev_cb, NULL);
+
+    os_callout_reset(&rain_callout, RAIN_PERIOD);
+
     hal_gpio_irq_init(WIND_SPEED_PIN, wind_speed_irq, NULL,
-        HAL_GPIO_TRIG_RISING, HAL_GPIO_PULL_UP);
+        HAL_GPIO_TRIG_FALLING, HAL_GPIO_PULL_UP);
+
+    hal_gpio_irq_init(RAIN_PIN, rain_irq, NULL,
+        HAL_GPIO_TRIG_FALLING, HAL_GPIO_PULL_UP);
 
     hal_gpio_irq_enable(WIND_SPEED_PIN);
+    hal_gpio_irq_enable(RAIN_PIN);
 }
 
 int16_t windrain_get_dir() {
