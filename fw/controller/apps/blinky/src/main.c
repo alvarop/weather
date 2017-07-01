@@ -19,6 +19,9 @@
 
 #include <assert.h>
 #include <string.h>
+#include <shell/shell.h>
+#include <stdio.h>
+#include <windrain/windrain.h>
 
 #include "sysinit/sysinit.h"
 #include "os/os.h"
@@ -61,6 +64,18 @@ static void init_timer(void)
 
 }
 
+static int test_cmd(int argc, char **argv);
+
+static struct shell_cmd test_cmd_struct = {
+    .sc_cmd = "test",
+    .sc_cmd_func = test_cmd
+};
+
+static int test_cmd(int argc, char **argv) {
+    printf("test!!!\n");
+    return 0;
+}
+
 /**
  * main
  *
@@ -81,9 +96,14 @@ main(int argc, char **argv)
 
     sysinit();
 
+    shell_cmd_register(&test_cmd_struct);
+
     g_led_pin = LED_BLINK_PIN;
     hal_gpio_init_out(g_led_pin, 1);
     init_timer();
+
+    windrain_init();
+
     while (1) {
         os_eventq_run(os_eventq_dflt_get());
     }

@@ -30,3 +30,4 @@ pkg.deps:
     - "@apache-mynewt-core/sys/console/full"
     - "@apache-mynewt-core/sys/shell"
     - "@apache-mynewt-core/sys/sysinit"
+    - libs/my_drivers/windrain

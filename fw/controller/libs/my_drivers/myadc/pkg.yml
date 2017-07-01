@@ -16,23 +16,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-
-project.name: "controller"
-
-project.repositories:
-    - apache-mynewt-core
-    - mynewt_nordic
-
-# Use github's distribution mechanism for core ASF libraries.
-# This provides mirroring automatically for us.
-#
-repository.apache-mynewt-core:
-    type: github
-    vers: 1-latest
-    user: apache
-    repo: mynewt-core
-repository.mynewt_nordic:
-    type: github
-    vers: 1-latest
-    user: runtimeinc
-    repo: mynewt_nordic
+pkg.name: libs/my_drivers/myadc
+pkg.deps:
+    - "@apache-mynewt-core/hw/hal"
+    - "@mynewt_nordic/hw/drivers/adc/adc_nrf52"
