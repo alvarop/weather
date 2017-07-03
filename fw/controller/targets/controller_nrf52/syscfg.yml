@@ -7,3 +7,5 @@ syscfg.vals:
     CONSOLE_TICKS: 1
     # Enable Console Prompt
     CONSOLE_PROMPT: 1
+    # Enable I2C 0
+    I2C_0: 1

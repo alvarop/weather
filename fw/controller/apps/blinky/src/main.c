@@ -20,8 +20,11 @@
 #include <assert.h>
 #include <string.h>
 #include <shell/shell.h>
+#include <console/console.h>
 #include <stdio.h>
 #include <windrain/windrain.h>
+#include <i2c/i2c.h>
+#include <am2315/am2315.h>
 
 #include "sysinit/sysinit.h"
 #include "os/os.h"
@@ -103,6 +106,11 @@ main(int argc, char **argv)
     init_timer();
 
     windrain_init();
+
+    rc = i2c_init(0, 27, 26, I2C_FREQ_100K);
+    console_printf("i2c init %d\n", rc);
+
+    am2315_init();
 
     while (1) {
         os_eventq_run(os_eventq_dflt_get());
