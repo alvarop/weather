@@ -25,6 +25,7 @@
 #include <windrain/windrain.h>
 #include <i2c/i2c.h>
 #include <am2315/am2315.h>
+#include <sht3x/sht3x.h>
 
 #include "sysinit/sysinit.h"
 #include "os/os.h"
@@ -111,6 +112,8 @@ main(int argc, char **argv)
     console_printf("i2c init %d\n", rc);
 
     am2315_init();
+
+    sht3x_init(SHT3x_ADDR);
 
     while (1) {
         os_eventq_run(os_eventq_dflt_get());
