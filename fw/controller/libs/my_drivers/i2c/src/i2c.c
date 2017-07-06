@@ -41,7 +41,7 @@ int32_t i2c(uint8_t i2c_num, uint8_t addr, uint16_t wlen, uint8_t *wbuff,
                 .len = rlen,
                 .buffer = rbuff
             };
-            rval = hal_i2c_master_write(i2c_num, &pdata,
+            rval = hal_i2c_master_read(i2c_num, &pdata,
                              timeout, 1);
 
             if (rval) {
