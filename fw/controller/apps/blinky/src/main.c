@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <windrain/windrain.h>
 #include <i2c/i2c.h>
-#include <am2315/am2315.h>
+// #include <am2315/am2315.h>
 #include <sht3x/sht3x.h>
 
 #include "sysinit/sysinit.h"
@@ -111,7 +111,7 @@ main(int argc, char **argv)
     rc = i2c_init(0, 27, 26, I2C_FREQ_100K);
     console_printf("i2c init %d\n", rc);
 
-    am2315_init();
+    // am2315_init();
 
     sht3x_init(SHT3x_ADDR);
 

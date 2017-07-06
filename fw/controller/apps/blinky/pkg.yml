@@ -32,5 +32,5 @@ pkg.deps:
     - "@apache-mynewt-core/sys/sysinit"
     - libs/my_drivers/windrain
     - libs/my_drivers/i2c
-    - libs/my_drivers/am2315
+    # - libs/my_drivers/am2315
     - libs/my_drivers/sht3x
