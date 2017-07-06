@@ -54,3 +54,7 @@ int32_t i2c(uint8_t i2c_num, uint8_t addr, uint16_t wlen, uint8_t *wbuff,
 
     return rval;
 }
+
+int32_t i2c_probe(uint8_t i2c_num, uint8_t addr, uint32_t timeout) {
+    return hal_i2c_master_probe(i2c_num, addr, timeout);
+}
