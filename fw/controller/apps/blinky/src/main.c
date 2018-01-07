@@ -108,12 +108,12 @@ main(int argc, char **argv)
 
     windrain_init();
 
-    rc = i2c_init(0, 27, 26, I2C_FREQ_100K);
-    console_printf("i2c init %d\n", rc);
+    // rc = i2c_init(0, 27, 26, I2C_FREQ_100K);
+    // console_printf("i2c init %d\n", rc);
 
     // am2315_init();
 
-    sht3x_init(SHT3x_ADDR);
+    // sht3x_init(SHT3x_ADDR);
 
     while (1) {
         os_eventq_run(os_eventq_dflt_get());

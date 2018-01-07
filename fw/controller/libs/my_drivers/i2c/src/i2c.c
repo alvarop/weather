@@ -18,7 +18,7 @@ int32_t i2c_init(uint8_t i2c_num, uint8_t sda_pin, uint8_t scl_pin,
 int32_t i2c(uint8_t i2c_num, uint8_t addr, uint16_t wlen, uint8_t *wbuff,
             uint16_t rlen, uint8_t *rbuff, uint32_t timeout) {
 
-    int32_t rval;
+    int32_t rval = -1;
 
     do {
         if(wlen) {

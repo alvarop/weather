@@ -6,7 +6,8 @@
 
 
 VDD = 3.3
-R = 10e3
+R_PU = 4700  # Pull up resistance
+R_S = 2000  # Additional series resistance
 
 # Direction (degrees), Resistance (ohms), Ideal Voltage, Midpoint Voltage
 DIRS = [
@@ -29,7 +30,8 @@ DIRS = [
 ]
 
 for direction in DIRS:
-    direction[2] = round(VDD * direction[1]/(direction[1] + R), 3)
+    v_wind = VDD * (direction[1]+R_S)/((direction[1]+R_S) + R_PU)
+    direction[2] = round(v_wind, 3)
 
 # Sort by voltage
 sd = sorted(DIRS, key=lambda x: x[2])
@@ -41,8 +43,10 @@ for i in range(len(sd)-1):
 # Add arbitrary voltage to last one
 sd[-1][3] = round(sd[-1][2] + VDD/16, 3)
 
-print('static const wind_dir_t dirs[] = {')
+print('// Auto-generated with winddircalc.py')
+print('// VDD{:1.2f}= R_PU={} R_S={}'.format(VDD, R_PU, R_S))
+print('static const wind_dir_t wind_dir_lut[] = {')
 for direction in sd:
     print('    {{{}, {}}},'.format(
-        int(direction[3] * 1000), int(direction[0] * 10 )))
+        int(direction[3] * 1000), int(direction[0] * 10)))
 print('    {0 ,0}};')

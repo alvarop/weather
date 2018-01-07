@@ -32,33 +32,35 @@ static uint32_t rain;
 static struct os_callout wind_speed_callout;
 static struct os_callout rain_callout;
 
-#define WIND_DIR_ADC_CH 0
+#define WIND_DIR_ADC_CH 3
 
-#define WIND_SPEED_PIN 28
-#define RAIN_PIN 29
+#define WIND_SPEED_PIN 06
+#define RAIN_PIN 07
 
 #define WIND_SPEED_PERIOD (2 * OS_TICKS_PER_SEC)
 
 #define RAIN_PERIOD (60 * OS_TICKS_PER_SEC)
 
 // Lookup table to get wind direction from voltage
+// Auto-generated with winddircalc.py
+// VDD3.30= R_PU=4700 R_S=2000
 static const wind_dir_t wind_dir_lut[] = {
-    {241, 1125},
-    {285, 675},
-    {354, 900},
-    {501, 1575},
-    {692, 1350},
-    {858, 2025},
-    {1117, 1800},
-    {1397, 225},
-    {1710, 450},
-    {1982, 2475},
-    {2148, 2250},
-    {2399, 3375},
-    {2600, 0},
-    {2763, 2925},
-    {2953, 3150},
-    {3252, 2700},
+    {1229, 1125},
+    {1271, 675},
+    {1337, 900},
+    {1472, 1575},
+    {1640, 1350},
+    {1780, 2025},
+    {1984, 1800},
+    {2195, 225},
+    {2407, 450},
+    {2586, 2475},
+    {2687, 2250},
+    {2833, 3375},
+    {2946, 0},
+    {3033, 2925},
+    {3131, 3150},
+    {3384, 2700},
     {0 ,0}};
 
 static void windrain_print_info() {
@@ -168,6 +170,7 @@ int16_t windrain_get_dir() {
 
     adc_chan_read(adc, WIND_DIR_ADC_CH, &mv);
     mv = adc_result_mv(adc, WIND_DIR_ADC_CH, mv);
+    // console_printf("%dmv\n", mv);
 
     for (uint8_t dir = 0; dir < sizeof(wind_dir_lut)/sizeof(wind_dir_t); dir++) {
         if (mv < wind_dir_lut[dir].voltage) {

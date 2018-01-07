@@ -44,12 +44,12 @@ adc_init(void)
             OS_DEV_INIT_KERNEL, OS_DEV_INIT_PRIO_DEFAULT,
             nrf52_adc_dev_init, &os_bsp_adc0_config);
     assert(rc == 0);
-    nrf_saadc_channel_config_t cc = NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(NRF_SAADC_INPUT_AIN1);
+    nrf_saadc_channel_config_t cc = NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(NRF_SAADC_INPUT_AIN3);
     cc.gain = NRF_SAADC_GAIN1_6;
     cc.reference = NRF_SAADC_REFERENCE_INTERNAL;
     adc = (struct adc_dev *) os_dev_open("adc0", 0, &adc_config);
     assert(adc != NULL);
-    adc_chan_config(adc, 0, &cc);
+    adc_chan_config(adc, 3, &cc);
 
     rc = shell_cmd_register(&adc_cmd);
 
