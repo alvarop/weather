@@ -1,4 +1,4 @@
-### Target: targets/controller_nrf52
-target.app: "apps/blinky"
+### Target: targets/breakout_v001
+target.app: "apps/weather"
 target.bsp: "@apache-mynewt-core/hw/bsp/nrf52dk"
 target.build_profile: "debug"

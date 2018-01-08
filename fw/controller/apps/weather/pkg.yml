@@ -1,0 +1,18 @@
+
+pkg.name: apps/weather
+pkg.type: app
+pkg.description: Weather station
+pkg.author: "Alvaro Prieto <source@alvaroprieto.com>"
+pkg.homepage: "https://github.com/alvarop/weather"
+pkg.keywords:
+
+pkg.deps:
+    - "@apache-mynewt-core/kernel/os"
+    - "@apache-mynewt-core/hw/hal"
+    - "@apache-mynewt-core/sys/console/full"
+    - "@apache-mynewt-core/sys/shell"
+    - "@apache-mynewt-core/sys/sysinit"
+    - libs/my_drivers/windrain
+    - libs/my_drivers/i2c
+    # - libs/my_drivers/am2315
+    - libs/my_drivers/sht3x
