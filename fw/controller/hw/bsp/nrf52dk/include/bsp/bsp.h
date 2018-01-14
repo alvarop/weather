@@ -39,18 +39,34 @@ extern "C" {
 extern uint8_t _ram_start;
 #define RAM_SIZE        0x10000
 
-/* LED pins */
-#define LED_1           (17)
-#define LED_2           (18)
-#define LED_3           (19)
-#define LED_4           (20)
-#define LED_BLINK_PIN   (LED_1)
+#define LED0           (20)
+#define LED1           (19)
+#define LED2           (18)
+#define LED3           (17)
+#define LED_BLINK_PIN   (LED0)
 
-/* Buttons */
-#define BUTTON_1 (13)
-#define BUTTON_2 (14)
-#define BUTTON_3 (15)
-#define BUTTON_4 (16)
+#define SPI_SCK (12)
+#define SPI_MISO (13)
+#define SPI_MOSI (14)
+#define SPI_CS0 (16)
+#define SPI_CS1 (15)
+
+#define I2C_SDA (27)
+#define I2C_SCL (26)
+
+#define UART_TX (11)
+#define UART_RX (10)
+
+#define WX_WDIR (5)
+#define WX_WDIR_AIN (3)
+#define WX_WDIR_SAADC NRF_SAADC_INPUT_AIN3
+
+#define WX_WSPEED (6)
+#define WX_RAIN (7)
+
+#define WX_LIGHT (4)
+#define WX_LIGHT_AIN (2)
+#define WX_LIGHT_SAADC NRF_SAADC_INPUT_AIN2
 
 #ifdef __cplusplus
 }
