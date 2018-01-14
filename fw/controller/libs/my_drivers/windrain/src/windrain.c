@@ -37,7 +37,7 @@ static struct os_callout rain_callout;
 #define WIND_SPEED_PIN 06
 #define RAIN_PIN 07
 
-#define WIND_SPEED_PERIOD (2 * OS_TICKS_PER_SEC)
+#define WIND_SPEED_PERIOD (10 * OS_TICKS_PER_SEC)
 
 #define RAIN_PERIOD (60 * OS_TICKS_PER_SEC)
 
@@ -110,7 +110,7 @@ static void rain_ev_cb(struct os_event *ev)
         ticks = rain_ticks - last_rain_ticks;
         last_rain_ticks = rain_ticks;
 
-        // 0.2794 mm per tick
+        // 0.2794 mm of rain per tick
         rain = ticks * 2794;
     } else {
         rain = 0;
@@ -131,8 +131,12 @@ static void wind_speed_irq(void *arg) {
 }
 
 static void rain_irq(void *arg) {
-    // TODO - add debounce
-    rain_ticks++;
+    static os_time_t last_rain_time;
+    if(os_time_get() != last_rain_time) {
+        console_printf("RAIN!\n");
+        last_rain_time = os_time_get();
+        rain_ticks++;
+    }
 }
 
 void windrain_init(void) {
