@@ -9,3 +9,7 @@ syscfg.vals:
     CONSOLE_PROMPT: 1
     # Enable I2C 0
     I2C_0: 1
+
+    WIND_PERIOD_S: 30
+    RAIN_PERIOD_S: 60
+    LIGHT_PERIOD_S: 60

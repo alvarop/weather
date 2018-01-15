@@ -11,7 +11,7 @@ static struct adc_dev *adc;
 /* The timer callout */
 static struct os_callout light_callout;
 
-#define LIGHT_PERIOD (1 * OS_TICKS_PER_SEC)
+#define LIGHT_PERIOD (MYNEWT_VAL(LIGHT_PERIOD_S) * OS_TICKS_PER_SEC)
 
 int32_t temt6000_read() {
     int light_level = 0;

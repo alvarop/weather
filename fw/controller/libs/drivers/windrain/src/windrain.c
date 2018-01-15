@@ -33,9 +33,9 @@ static uint32_t rain;
 static struct os_callout wind_speed_callout;
 static struct os_callout rain_callout;
 
-#define WIND_SPEED_PERIOD (10 * OS_TICKS_PER_SEC)
+#define WIND_SPEED_PERIOD (MYNEWT_VAL(WIND_PERIOD_S) * OS_TICKS_PER_SEC)
 
-#define RAIN_PERIOD (60 * OS_TICKS_PER_SEC)
+#define RAIN_PERIOD (MYNEWT_VAL(RAIN_PERIOD_S) * OS_TICKS_PER_SEC)
 
 // Lookup table to get wind direction from voltage
 // Auto-generated with winddircalc.py
