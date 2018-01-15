@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <adc/adc.h>
 #include <myadc/myadc.h>
+#include "bsp.h"
 
 int16_t windrain_get_dir();
 
@@ -139,14 +140,15 @@ static void rain_irq(void *arg) {
     }
 }
 
-void windrain_init(void) {
+void windrain_init(struct adc_dev *adc_dev) {
     int rc;
+    adc = adc_dev;
 
     rc = shell_cmd_register(&windrain_cmd);
 
     assert(rc == 0);
 
-    adc = adc_init();
+    adc_init_ch(adc, WX_WDIR_AIN, WX_WDIR_SAADC);
 
     os_callout_init(&wind_speed_callout, os_eventq_dflt_get(),
                     wind_speed_ev_cb, NULL);

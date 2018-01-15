@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <string.h>
+#include <myadc/myadc.h>
 #include <shell/shell.h>
 #include <console/console.h>
 #include <stdio.h>
@@ -44,7 +45,11 @@ int main(int argc, char **argv) {
     hal_gpio_init_out(LED_BLINK_PIN, 1);
     init_timer();
 
-    windrain_init();
+    struct adc_dev *adc;
+
+    adc = adc_init();
+
+    windrain_init(adc);
 
     // rc = i2c_init(0, 27, 26, I2C_FREQ_100K);
     // console_printf("i2c init %d\n", rc);
