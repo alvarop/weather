@@ -1,7 +1,6 @@
 #include <assert.h>
 #include <string.h>
 #include <myadc/myadc.h>
-#include <shell/shell.h>
 #include <console/console.h>
 #include <stdio.h>
 #include <windrain/windrain.h>

@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include <shell/shell.h>
 #include <console/console.h>
 #include <assert.h>
 #include <i2c/i2c.h>
@@ -7,18 +6,7 @@
 
 #define AM2315_ADDR 0x5C
 
-static int am2315_shell_func(int argc, char **argv);
-static struct shell_cmd am2315_cmd = {
-    .sc_cmd = "am2315",
-    .sc_cmd_func = am2315_shell_func,
-};
-
 int32_t am2315_init() {
-    int rc;
-
-    rc = shell_cmd_register(&am2315_cmd);
-
-    assert(rc == 0);
 
     return 0;
 }
@@ -64,10 +52,3 @@ int32_t am2315_read() {
     return 0;
 }
 
-static int am2315_shell_func(int argc, char **argv) {
-
-    console_printf("AM2315 Read!\n");
-    am2315_read();
-
-    return 0;
-}

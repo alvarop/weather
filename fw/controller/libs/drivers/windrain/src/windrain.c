@@ -1,4 +1,3 @@
-#include <shell/shell.h>
 #include <console/console.h>
 #include <hal/hal_gpio.h>
 #include <assert.h>
@@ -7,12 +6,6 @@
 #include "bsp.h"
 
 int16_t windrain_get_dir();
-
-static int windrain_shell_func(int argc, char **argv);
-static struct shell_cmd windrain_cmd = {
-    .sc_cmd = "wr",
-    .sc_cmd_func = windrain_shell_func,
-};
 
 typedef struct {
     uint16_t voltage;
@@ -129,19 +122,14 @@ static void wind_speed_irq(void *arg) {
 static void rain_irq(void *arg) {
     static os_time_t last_rain_time;
     if(os_time_get() != last_rain_time) {
-        console_printf("RAIN!\n");
         last_rain_time = os_time_get();
         rain_ticks++;
     }
 }
 
 void windrain_init(struct adc_dev *adc_dev) {
-    int rc;
+
     adc = adc_dev;
-
-    rc = shell_cmd_register(&windrain_cmd);
-
-    assert(rc == 0);
 
     adc_init_ch(adc, WX_WDIR_AIN, WX_WDIR_SAADC);
 
@@ -183,13 +171,4 @@ int16_t windrain_get_dir() {
     }
 
     return direction;
-}
-
-static int windrain_shell_func(int argc, char **argv) {
-
-    os_time_t now = os_time_get();
-    console_printf("Time: %ld\n", now);
-    windrain_print_info();
-
-    return 0;
 }

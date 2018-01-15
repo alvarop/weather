@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include <shell/shell.h>
 #include <console/console.h>
 #include <assert.h>
 #include <i2c/i2c.h>
@@ -31,21 +30,9 @@
 
 #define I2C_PORT (0)
 
-static int sht3x_shell_func(int argc, char **argv);
-static struct shell_cmd sht3x_cmd = {
-    .sc_cmd = "sht3x",
-    .sc_cmd_func = sht3x_shell_func,
-};
-
 int32_t sht3x_init(uint8_t addr) {
     int32_t rval = 0;
     int16_t status = 0;
-
-    int rc;
-
-    rc = shell_cmd_register(&sht3x_cmd);
-
-    assert(rc == 0);
 
     do {
         rval = sht3x_reset(addr);
@@ -154,24 +141,4 @@ int32_t sht3x_read(uint8_t addr, int16_t *temperature, int16_t *humidity) {
     } while(0);
 
     return rval;
-}
-
-
-
-
-static int sht3x_shell_func(int argc, char **argv) {
-    int16_t temp;
-    int16_t humid;
-    int32_t rval;
-
-    rval = sht3x_read(SHT3x_ADDR, &temp, &humid);
-    if (rval == 0) {
-        console_printf("%d.%d C %d.%d %%RH\n",
-            temp/100, temp - (temp/100) * 100,
-            humid/100, humid - (humid/100) * 100);
-    } else {
-        console_printf("Error reading sht3x %ld\n", rval);
-    }
-
-    return 0;
 }

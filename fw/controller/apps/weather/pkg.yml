@@ -10,7 +10,6 @@ pkg.deps:
     - "@apache-mynewt-core/kernel/os"
     - "@apache-mynewt-core/hw/hal"
     - "@apache-mynewt-core/sys/console/full"
-    - "@apache-mynewt-core/sys/shell"
     - "@apache-mynewt-core/sys/sysinit"
     - libs/drivers/windrain
     - libs/drivers/i2c

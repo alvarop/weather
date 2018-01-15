@@ -1,4 +1,3 @@
-#include <shell/shell.h>
 #include <console/console.h>
 #include <hal/hal_gpio.h>
 #include <assert.h>
