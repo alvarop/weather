@@ -1,4 +1,4 @@
-pkg.name: libs/my_drivers/windrain
+pkg.name: libs/drivers/windrain
 pkg.description: Argent data systems wind/rain sensor driver
 pkg.author: "Alvaro Prieto <source@alvaroprieto.com>"
 pkg.homepage: "https://github.com/alvarop/"
@@ -8,7 +8,7 @@ pkg.keywords:
 
 pkg.deps:
     - "@apache-mynewt-core/kernel/os"
-    - libs/my_drivers/myadc
+    - libs/drivers/myadc
 
 pkg.cflags:
     - -std=c99

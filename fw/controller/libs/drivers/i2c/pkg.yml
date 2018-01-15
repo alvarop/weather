@@ -1,4 +1,4 @@
-pkg.name: libs/my_drivers/i2c
+pkg.name: libs/drivers/i2c
 pkg.description: I2C Driver
 pkg.author: "Alvaro Prieto <source@alvaroprieto.com>"
 pkg.homepage: "https://github.com/alvarop/"

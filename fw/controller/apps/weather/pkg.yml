@@ -12,7 +12,7 @@ pkg.deps:
     - "@apache-mynewt-core/sys/console/full"
     - "@apache-mynewt-core/sys/shell"
     - "@apache-mynewt-core/sys/sysinit"
-    - libs/my_drivers/windrain
-    - libs/my_drivers/i2c
-    # - libs/my_drivers/am2315
-    - libs/my_drivers/sht3x
+    - libs/drivers/windrain
+    - libs/drivers/i2c
+    # - libs/drivers/am2315
+    - libs/drivers/sht3x

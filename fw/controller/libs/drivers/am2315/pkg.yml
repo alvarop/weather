@@ -1,4 +1,4 @@
-pkg.name: libs/my_drivers/am2315
+pkg.name: libs/drivers/am2315
 pkg.description: AM2315 Humidity/Temperature Sensor Driver
 pkg.author: "Alvaro Prieto <source@alvaroprieto.com>"
 pkg.homepage: "https://github.com/alvarop/"
@@ -10,7 +10,7 @@ pkg.keywords:
 
 pkg.deps:
     - "@apache-mynewt-core/kernel/os"
-    - libs/my_drivers/i2c
+    - libs/drivers/i2c
 
 pkg.cflags:
     - -std=c99
