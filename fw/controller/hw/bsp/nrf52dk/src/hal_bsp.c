@@ -50,11 +50,13 @@
 #include <soft_pwm/soft_pwm.h>
 #endif
 
+#include "bsp.h"
+
 #if MYNEWT_VAL(UART_0)
 static struct uart_dev os_bsp_uart0;
 static const struct nrf52_uart_cfg os_bsp_uart0_cfg = {
-    .suc_pin_tx = MYNEWT_VAL(UART_0_PIN_TX),
-    .suc_pin_rx = MYNEWT_VAL(UART_0_PIN_RX),
+    .suc_pin_tx = UART_TX,
+    .suc_pin_rx = UART_RX,
     // .suc_pin_rts = MYNEWT_VAL(UART_0_PIN_RTS),
     // .suc_pin_cts = MYNEWT_VAL(UART_0_PIN_CTS),
 };
@@ -75,18 +77,9 @@ static const struct uart_bitbang_conf os_bsp_uart1_cfg = {
  * and is handled outside the SPI routines.
  */
 static const struct nrf52_hal_spi_cfg os_bsp_spi0m_cfg = {
-    .sck_pin      = 23,
-    .mosi_pin     = 24,
-    .miso_pin     = 25,
-};
-#endif
-
-#if MYNEWT_VAL(SPI_0_SLAVE)
-static const struct nrf52_hal_spi_cfg os_bsp_spi0s_cfg = {
-    .sck_pin      = 23,
-    .mosi_pin     = 24,
-    .miso_pin     = 25,
-    .ss_pin       = 22,
+    .sck_pin      = SPI_SCK,
+    .mosi_pin     = SPI_MOSI,
+    .miso_pin     = SPI_MISO,
 };
 #endif
 
@@ -106,8 +99,8 @@ static struct pwm_dev os_bsp_spwm;
 
 #if MYNEWT_VAL(I2C_0)
 static const struct nrf52_hal_i2c_cfg hal_i2c_cfg = {
-    .scl_pin = 27,
-    .sda_pin = 26,
+    .scl_pin = I2C_SCL,
+    .sda_pin = I2C_SDA,
     .i2c_frequency = 100    /* 100 kHz */
 };
 #endif

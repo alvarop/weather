@@ -33,11 +33,6 @@ static uint32_t rain;
 static struct os_callout wind_speed_callout;
 static struct os_callout rain_callout;
 
-#define WIND_DIR_ADC_CH 3
-
-#define WIND_SPEED_PIN 06
-#define RAIN_PIN 07
-
 #define WIND_SPEED_PERIOD (10 * OS_TICKS_PER_SEC)
 
 #define RAIN_PERIOD (60 * OS_TICKS_PER_SEC)
@@ -160,22 +155,22 @@ void windrain_init(struct adc_dev *adc_dev) {
 
     os_callout_reset(&rain_callout, RAIN_PERIOD);
 
-    hal_gpio_irq_init(WIND_SPEED_PIN, wind_speed_irq, NULL,
+    hal_gpio_irq_init(WX_WSPEED, wind_speed_irq, NULL,
         HAL_GPIO_TRIG_FALLING, HAL_GPIO_PULL_UP);
 
-    hal_gpio_irq_init(RAIN_PIN, rain_irq, NULL,
+    hal_gpio_irq_init(WX_RAIN, rain_irq, NULL,
         HAL_GPIO_TRIG_FALLING, HAL_GPIO_PULL_UP);
 
-    hal_gpio_irq_enable(WIND_SPEED_PIN);
-    hal_gpio_irq_enable(RAIN_PIN);
+    hal_gpio_irq_enable(WX_WSPEED);
+    hal_gpio_irq_enable(WX_RAIN);
 }
 
 int16_t windrain_get_dir() {
     int mv = 0;
     int16_t direction = -1;
 
-    adc_chan_read(adc, WIND_DIR_ADC_CH, &mv);
-    mv = adc_result_mv(adc, WIND_DIR_ADC_CH, mv);
+    adc_chan_read(adc, WX_WDIR_AIN, &mv);
+    mv = adc_result_mv(adc, WX_WDIR_AIN, mv);
     // console_printf("%dmv\n", mv);
 
     for (uint8_t dir = 0; dir < sizeof(wind_dir_lut)/sizeof(wind_dir_t); dir++) {
