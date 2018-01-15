@@ -16,3 +16,4 @@ pkg.deps:
     - libs/drivers/i2c
     # - libs/drivers/am2315
     - libs/drivers/sht3x
+    - libs/drivers/temt6000

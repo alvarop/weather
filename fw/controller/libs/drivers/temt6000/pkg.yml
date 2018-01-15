@@ -1,0 +1,13 @@
+pkg.name: libs/drivers/temt6000
+pkg.description: Ambient light sensor driver
+pkg.author: "Alvaro Prieto <source@alvaroprieto.com>"
+pkg.homepage: "https://github.com/alvarop/"
+pkg.keywords:
+    - light
+
+pkg.deps:
+    - "@apache-mynewt-core/kernel/os"
+    - libs/drivers/myadc
+
+pkg.cflags:
+    - -std=gnu99

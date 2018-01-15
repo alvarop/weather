@@ -7,6 +7,7 @@
 #include <windrain/windrain.h>
 #include <i2c/i2c.h>
 #include <sht3x/sht3x.h>
+#include <temt6000/temt6000.h>
 
 #include "sysinit/sysinit.h"
 #include "os/os.h"
@@ -50,6 +51,7 @@ int main(int argc, char **argv) {
     adc = adc_init();
 
     windrain_init(adc);
+    temt6000_init(adc);
 
     // rc = i2c_init(0, 27, 26, I2C_FREQ_100K);
     // console_printf("i2c init %d\n", rc);
