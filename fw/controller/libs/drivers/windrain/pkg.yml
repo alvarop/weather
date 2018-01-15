@@ -11,4 +11,4 @@ pkg.deps:
     - libs/drivers/myadc
 
 pkg.cflags:
-    - -std=c99
+    - -std=gnu99

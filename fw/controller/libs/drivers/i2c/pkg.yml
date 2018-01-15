@@ -10,4 +10,4 @@ pkg.deps:
     - "@apache-mynewt-core/hw/mcu/nordic/nrf52xxx"
 
 pkg.cflags:
-    - -std=c99
+    - -std=gnu99

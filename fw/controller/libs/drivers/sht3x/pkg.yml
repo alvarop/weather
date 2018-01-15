@@ -13,4 +13,4 @@ pkg.deps:
     - libs/drivers/i2c
 
 pkg.cflags:
-    - -std=c99
+    - -std=gnu99
