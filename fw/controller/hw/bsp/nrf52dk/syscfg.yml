@@ -82,6 +82,10 @@ syscfg.defs:
         description: 'SOFT PWM'
         value: 0
 
+    BMP280_ONB:
+        description: 'BMP280 sensor onboard'
+        value: 0
+
 syscfg.defs.BLE_LP_CLOCK:
     TIMER_0:
         value: 0

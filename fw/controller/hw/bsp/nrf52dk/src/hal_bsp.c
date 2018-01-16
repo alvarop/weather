@@ -17,8 +17,10 @@
  * under the License.
  */
 
+#include <stdio.h>
 #include <stdint.h>
 #include <stddef.h>
+#include <string.h>
 #include <assert.h>
 #include <nrf52.h>
 #include "os/os_cputime.h"
@@ -48,6 +50,9 @@
 #endif
 #if MYNEWT_VAL(SOFT_PWM)
 #include <soft_pwm/soft_pwm.h>
+#endif
+#if MYNEWT_VAL(BMP280_ONB)
+#include <bmp280/bmp280.h>
 #endif
 
 #include "bsp.h"
@@ -95,13 +100,23 @@ static struct pwm_dev os_bsp_pwm2;
 #if MYNEWT_VAL(SOFT_PWM)
 static struct pwm_dev os_bsp_spwm;
 #endif
-
+#if MYNEWT_VAL(BMP280_ONB)
+static struct bmp280 bmp280;
+#endif
 
 #if MYNEWT_VAL(I2C_0)
 static const struct nrf52_hal_i2c_cfg hal_i2c_cfg = {
     .scl_pin = I2C_SCL,
     .sda_pin = I2C_SDA,
     .i2c_frequency = 100    /* 100 kHz */
+};
+#endif
+
+#if MYNEWT_VAL(I2C_0) && MYNEWT_VAL(BMP280_ONB)
+static struct sensor_itf i2c_0_itf_bmp = {
+    .si_type = SENSOR_ITF_I2C,
+    .si_num = 0,
+    .si_addr = BMP280_DFLT_I2C_ADDR
 };
 #endif
 
@@ -163,6 +178,56 @@ hal_bsp_get_nvic_priority(int irq_num, uint32_t pri)
         cfg_pri = pri;
     }
     return cfg_pri;
+}
+
+/**
+ * BMP280 Sensor default configuration used by the creator package
+ *
+ * @return 0 on success, non-zero on failure
+ */
+#if MYNEWT_VAL(BMP280_ONB)
+int
+config_bmp280_sensor(void)
+{
+    int rc = 0;
+    struct os_dev *dev;
+    struct bmp280_cfg bmpcfg;
+
+    dev = (struct os_dev *) os_dev_open("bmp280_0", OS_TIMEOUT_NEVER, NULL);
+  
+    assert(dev != NULL);
+
+    memset(&bmpcfg, 0, sizeof(bmpcfg));
+
+    bmpcfg.bc_mode = BMP280_MODE_NORMAL;
+    bmpcfg.bc_iir = BMP280_FILTER_X16;
+    bmpcfg.bc_sby_dur = BMP280_STANDBY_MS_0_5;
+    bmpcfg.bc_boc[0].boc_type = SENSOR_TYPE_AMBIENT_TEMPERATURE;
+    bmpcfg.bc_boc[1].boc_type = SENSOR_TYPE_PRESSURE;
+    bmpcfg.bc_boc[0].boc_oversample = BMP280_SAMPLING_X2;
+    bmpcfg.bc_boc[1].boc_oversample = BMP280_SAMPLING_X16;
+    bmpcfg.bc_s_mask = SENSOR_TYPE_AMBIENT_TEMPERATURE|
+                       SENSOR_TYPE_PRESSURE;
+
+    rc = bmp280_config((struct bmp280 *)dev, &bmpcfg);
+
+    os_dev_close(dev);
+    return rc;
+}
+#endif
+
+static void
+sensor_dev_create(void)
+{
+    int rc;
+    (void)rc;
+
+#if MYNEWT_VAL(BMP280_ONB)
+    rc = os_dev_create((struct os_dev *) &bmp280, "bmp280_0",
+      OS_DEV_INIT_PRIMARY, 0, bmp280_init, (void *)&i2c_0_itf_bmp);
+    assert(rc == 0);
+#endif
+
 }
 
 void
@@ -269,5 +334,7 @@ hal_bsp_init(void)
       OS_DEV_INIT_PRIMARY, 0, uart_bitbang_init, (void *)&os_bsp_uart1_cfg);
     assert(rc == 0);
 #endif
+
+sensor_dev_create();
 
 }
