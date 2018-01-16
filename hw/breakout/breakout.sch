@@ -39,8 +39,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Weather Breakout"
-Date "2017-09-30"
-Rev "0.0.1"
+Date "2018-01-01"
+Rev "0.0.2"
 Comp "@alvaroprieto"
 Comment1 ""
 Comment2 ""

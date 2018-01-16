@@ -1,9 +1,9 @@
-(kicad_pcb (version 4) (host pcbnew 4.0.7-e2-6376~58~ubuntu16.04.1)
+(kicad_pcb (version 4) (host pcbnew 4.0.7)
 
   (general
     (links 98)
     (no_connects 0)
-    (area 126.924999 68.504999 177.875001 127.075001)
+    (area 123.443314 66.5976 181.356686 128.607401)
     (thickness 1.6)
     (drawings 47)
     (tracks 354)
@@ -13,6 +13,13 @@
   )
 
   (page A4)
+  (title_block
+    (title "Weather Breakout")
+    (date 2018-01-01)
+    (rev 0.0.2)
+    (company @alvaroprieto)
+  )
+
   (layers
     (0 F.Cu signal)
     (31 B.Cu signal)
@@ -37,7 +44,7 @@
   )
 
   (setup
-    (last_trace_width 0.254)
+    (last_trace_width 0.1524)
     (user_trace_width 0.1524)
     (user_trace_width 0.254)
     (user_trace_width 0.381)
@@ -69,7 +76,7 @@
     (mod_text_width 0.15)
     (pad_size 1.524 1.524)
     (pad_drill 0.762)
-    (pad_to_mask_clearance 0.127)
+    (pad_to_mask_clearance 0.0508)
     (aux_axis_origin 0 0)
     (visible_elements FFFFFF7F)
     (pcbplotparams
@@ -1955,7 +1962,7 @@
   (gr_text "by @alvaroprieto" (at 164.338 70.358) (layer F.SilkS) (tstamp 59D01B90)
     (effects (font (size 1.016 1.016) (thickness 0.1778)))
   )
-  (gr_text "Weather Breakout\nv0.0.1" (at 139.954 70.358) (layer F.SilkS)
+  (gr_text "Weather Breakout\nv0.0.2" (at 139.954 70.358) (layer F.SilkS)
     (effects (font (size 1.016 1.016) (thickness 0.1778)))
   )
   (gr_text "LED3\n" (at 168.402 80.264) (layer F.SilkS) (tstamp 59D01B6E)
