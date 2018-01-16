@@ -34,3 +34,4 @@ eggs
 *.egg-info
 
 Pipfile.lock
+project.state
