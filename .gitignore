@@ -27,3 +27,10 @@ _autosave-*
 build/
 *.a
 *.o
+
+develop-eggs
+dist
+eggs
+*.egg-info
+
+Pipfile.lock
