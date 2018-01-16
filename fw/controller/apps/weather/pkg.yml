@@ -16,3 +16,9 @@ pkg.deps:
     # - libs/drivers/am2315
     - libs/drivers/sht3x
     - libs/drivers/temt6000
+
+pkg.deps.USE_BLE:
+    - "@apache-mynewt-core/net/nimble/controller"
+    - "@apache-mynewt-core/net/nimble/transport/ram"
+    - "@apache-mynewt-core/net/nimble/host"
+    - "@apache-mynewt-core/net/nimble/host/store/config"
