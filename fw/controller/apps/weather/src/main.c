@@ -21,15 +21,18 @@
 #include "hal/hal_gpio.h"
 
 /* Define task stack and task object */
-#define WEATHER_TASK_PRI         (10) 
-#define WEATHER_STACK_SIZE       (256) 
-struct os_task weather_task; 
-os_stack_t weather_task_stack[WEATHER_STACK_SIZE]; 
+#define WEATHER_TASK_PRI         (10)
+#define WEATHER_STACK_SIZE       (256)
+struct os_task weather_task;
+os_stack_t weather_task_stack[WEATHER_STACK_SIZE];
 
+static uint16_t timestamp;
+
+#if MYNEWT_VAL(USE_BLE)
 #define BEACON_MAGIC 0xDA7A
 
 typedef struct {
-    int16_t magic;
+    uint16_t magic;
     uint16_t timestamp;
     int16_t temperature;
     int16_t light;
@@ -38,7 +41,6 @@ typedef struct {
     uint16_t rain;
 } __attribute__((packed)) weather_beacon_t;
 
-#if MYNEWT_VAL(USE_BLE)
 weather_beacon_t beacon_data;
 
 static void ble_app_advertise();
@@ -54,39 +56,31 @@ static void ble_app_set_addr(void) {
     assert(rc == 0);
 }
 
-static int bleprph_gap_event(struct ble_gap_event *event, void *arg) {
-    switch (event->type) {
-    case BLE_GAP_EVENT_ADV_COMPLETE:
-        ble_app_advertise();
-        return 0;
-    }
-
-    console_printf("Other event: %d\n", event->type);
-    return 0;
-}
-
-
 static void ble_app_advertise() {
     struct ble_gap_adv_params adv_params;
     struct ble_hs_adv_fields fields;
     int rc;
+
+    beacon_data.timestamp = timestamp;
 
     fields = (struct ble_hs_adv_fields){ 0 };
     rc = ble_eddystone_set_adv_data_uid(&fields, &beacon_data);
     assert(rc == 0);
 
     adv_params = (struct ble_gap_adv_params){ 0 };
-    rc = ble_gap_adv_start(BLE_OWN_ADDR_RANDOM, NULL, 1000,
-                           &adv_params, bleprph_gap_event, NULL);
+    rc = ble_gap_adv_start(
+        BLE_OWN_ADDR_RANDOM,
+        NULL,
+        MYNEWT_VAL(SAMPLE_PERIOD_S) * 1000 - 500,
+        &adv_params,
+        NULL,
+        NULL);
     assert(rc == 0);
 }
 
 static void ble_app_on_sync(void) {
     /* Generate a non-resolvable private address. */
     ble_app_set_addr();
-
-    /* Advertise indefinitely. */
-    ble_app_advertise();
 }
 #endif
 
@@ -124,7 +118,7 @@ void print_bmp_data() {
     sensor = sensor_mgr_find_next_bydevname("bmp280_0", NULL);
     assert(sensor);
     int rc = sensor_read(
-        sensor, 
+        sensor,
         SENSOR_TYPE_AMBIENT_TEMPERATURE|SENSOR_TYPE_PRESSURE,
         bmp_read,
         &data,
@@ -133,12 +127,12 @@ void print_bmp_data() {
     if (rc == 0) {
         int int_part = (int)(data.temperature * 100)/100;
         int frac_part = (int)((data.temperature - int_part) * 100);
-        
+
         console_printf("Temperature: %d.%dC\n", int_part, frac_part);
 
         int_part = (int)(data.pressure/1000.0 * 100000)/100000;
         frac_part = (int)((data.pressure/1000.0 - int_part) * 100000);
-        
+
         console_printf("Pressure: %d.%dkPa\n", int_part, frac_part);
 
         beacon_data.temperature = (int16_t)(data.temperature * 100);
@@ -173,9 +167,12 @@ void weather_task_func(void *arg) {
     temt6000_init(adc);
 
     while (1) {
-        os_time_delay(OS_TICKS_PER_SEC * 5);
+        os_time_delay(OS_TICKS_PER_SEC * MYNEWT_VAL(SAMPLE_PERIOD_S));
 
         print_bmp_data();
+        ble_app_advertise();
+
+        timestamp++;
 
         hal_gpio_toggle(LED_BLINK_PIN);
     }

@@ -3,3 +3,7 @@ syscfg.defs:
     USE_BLE:
         description: 'Enable BLE'
         value: 1
+
+    SAMPLE_PERIOD_S:
+        description: 'Sensor sampling period'
+        value: 60
