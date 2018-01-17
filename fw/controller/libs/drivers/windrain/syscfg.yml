@@ -1,7 +1,0 @@
-syscfg.defs:
-    WIND_PERIOD_S:
-        description: 'Wind averaging period in seconds'
-        value: 5
-    RAIN_PERIOD_S:
-        description: 'Rain averaging period in seconds'
-        value: 60

@@ -69,8 +69,11 @@ def print_weather_packet(packet, rssi):
         print('Temperature: {} C'.format(temperature/100.0))
         print('Light: {}'.format(light))
         print('Pressure {:0.7} kPa'.format(pressure/1000.0))
-        print('Wind: {} kph'.format(wind))
         print('Rain: {} mm'.format(rain))
+
+        wind_speed = wind/1000.0
+        # TODO add wind dir
+        print('Wind: {} kph'.format(wind_speed))
 
 
 def to_hex_str(data):

@@ -11,7 +11,3 @@ syscfg.vals:
     SENSOR_OIC: 0
 
     SAMPLE_PERIOD_S: 10
-
-    WIND_PERIOD_S: 30
-    RAIN_PERIOD_S: 60
-    LIGHT_PERIOD_S: 60

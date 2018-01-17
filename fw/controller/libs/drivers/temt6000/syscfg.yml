@@ -1,4 +1,0 @@
-syscfg.defs:
-    LIGHT_PERIOD_S:
-        description: 'Light sensor sampling period in seconds'
-        value: 30

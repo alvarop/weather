@@ -111,7 +111,7 @@ int bmp_read(struct sensor *sensor, void *arg, void *reading,
     return rval;
 }
 
-void print_bmp_data() {
+void update_pressure() {
     bmp280_data_t data = {0.0, 0.0};
 
     struct sensor *sensor;
@@ -143,6 +143,30 @@ void print_bmp_data() {
     }
 }
 
+void update_light() {
+    uint16_t light = temt6000_read();
+    beacon_data.light = light;
+    console_printf("Light: %d\n", light);
+}
+
+void update_windrain() {
+    uint16_t rain = windrain_get_rain();
+    uint16_t wind_speed = windrain_get_speed();
+    int16_t wind_dir = windrain_get_dir();
+
+    beacon_data.rain = rain;
+    beacon_data.wind = wind_speed & 0x1FFF;
+
+    // TODO - Send windspeed
+
+    console_printf( "ws: %d.%d kph @ %d.%d\n",
+                        wind_speed/1000,
+                        wind_speed - (wind_speed/1000) * 1000,
+                        wind_dir/10,
+                        wind_dir - (wind_dir/10) * 10);
+    console_printf("rain: %d.%d mm\n", rain/10000, rain - (rain/10000) * 10000);
+}
+
 void weather_task_func(void *arg) {
 
     console_printf("Weather Breakout!\n");
@@ -169,7 +193,9 @@ void weather_task_func(void *arg) {
     while (1) {
         os_time_delay(OS_TICKS_PER_SEC * MYNEWT_VAL(SAMPLE_PERIOD_S));
 
-        print_bmp_data();
+        update_pressure();
+        update_light();
+        update_windrain();
         ble_app_advertise();
 
         timestamp++;
