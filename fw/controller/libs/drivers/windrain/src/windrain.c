@@ -73,7 +73,6 @@ uint16_t windrain_get_speed() {
     int rval = os_gettimeofday(&tv, NULL);
     assert(rval == 0);
 
-
     if (last_speed_time_s < tv.tv_sec) {
         // 1 tick/s is equivalent to 2.4kph
         wind_speed = speed_ticks * 2400 / (tv.tv_sec - last_speed_time_s);
@@ -81,6 +80,7 @@ uint16_t windrain_get_speed() {
         wind_speed = 0;
     }
 
+    speed_ticks = 0;
     last_speed_time_s = tv.tv_sec;
 
     return (uint16_t) wind_speed;

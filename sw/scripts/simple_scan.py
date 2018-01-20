@@ -6,7 +6,7 @@ import struct
 import time
 from bglib import bglib
 
-last_timestamp = -1
+last_index = -1
 
 eddystone_types = {
     0x00: 'uid',
@@ -54,26 +54,66 @@ def decode_eddystone_data(data):
     return {'type': eddystone_types[eddystone_type], 'uid': data[8:8+data_len]}
 
 
-def print_weather_packet(packet, rssi):
-    global last_timestamp
+def process_weather_packet(packet, rssi):
+    global last_index
 
-    (magic, timestamp, temperature, light, pressure, wind, rain) = \
+    (magic, index, temperature, light, pressure, wind, rain) = \
         struct.unpack('<HHhhfHH', packet)
 
     if magic != 0xDA7A:
         return
 
-    if timestamp != last_timestamp:
-        last_timestamp = timestamp
-        print('Timestamp: {}'.format(timestamp))
-        print('Temperature: {} C'.format(temperature/100.0))
-        print('Light: {}'.format(light))
-        print('Pressure {:0.7} kPa'.format(pressure/1000.0))
-        print('Rain: {} mm'.format(rain))
+    if index != last_index:
+        last_index = index
 
-        wind_speed = wind/1000.0
-        # TODO add wind dir
-        print('Wind: {} kph'.format(wind_speed))
+        data = {}
+        data['timestamp'] = time.strftime(
+            '%Y-%m-%d %H:%M:%S', time.localtime())
+        data['index'] = index
+        data['temperature'] = temperature/100.0
+        data['humidity'] = 'N/A'
+        data['pressure'] = pressure/1000.0
+        data['light'] = light
+        data['rain'] = (rain & 0xFFF)/1000.0
+        data['wind_speed'] = wind/1000.0
+        # Currently packing wind direction on top 4 bits of rain data
+        data['wind_dir'] = ((rain >> 12) & 0xF) * 22.5
+
+        if args.filename:
+            save_data(data)
+
+        print_data(data)
+
+
+data_columns = ['timestamp', 'index', 'temperature', 'humidity',
+                'pressure', 'light', 'rain', 'wind_speed', 'wind_dir']
+
+
+def save_data(data):
+    line = ''
+
+    for item in data_columns:
+        line += str(data[item]) + ','
+
+    csvfile.write(line + '\n')
+    csvfile.flush()
+
+
+def write_header():
+    header = ''
+    for item in data_columns:
+        header += str(item) + ','
+    csvfile.write(header + '\n')
+
+
+def print_data(data):
+    print('{}'.format(data['timestamp']))
+    print('index: {}'.format(data['index']))
+    print('Temperature: {} C'.format(data['temperature']))
+    print('Light: {}'.format(data['light']))
+    print('Pressure {:0.7} kPa'.format(data['pressure']))
+    print('Rain: {} mm'.format(data['rain']))
+    print('Wind: {} kph @{}'.format(data['wind_speed'], data['wind_dir']))
 
 
 def to_hex_str(data):
@@ -90,7 +130,7 @@ def timeout(sender, args):
 def process_scan_response(sender, args):
     eddystone_data = decode_eddystone_data(args['data'])
     if eddystone_data and eddystone_data['type'] == 'uid':
-        print_weather_packet(eddystone_data['uid'], args['rssi'])
+        process_weather_packet(eddystone_data['uid'], args['rssi'])
 
 
 parser = argparse.ArgumentParser()
@@ -104,7 +144,16 @@ parser.add_argument('--port',
                     required=True,
                     help='BLED112 device to connect to')
 
+parser.add_argument('--filename',
+                    help='Output filename (csv format)')
+
 args = parser.parse_args()
+
+if args.filename:
+    csvfile = open(args.filename, mode='w')
+
+    write_header()
+
 
 ble = bglib.BGLib()
 ble.packet_mode = False

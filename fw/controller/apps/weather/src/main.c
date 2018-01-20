@@ -154,10 +154,11 @@ void update_windrain() {
     uint16_t wind_speed = windrain_get_speed();
     int16_t wind_dir = windrain_get_dir();
 
-    beacon_data.rain = rain;
-    beacon_data.wind = wind_speed & 0x1FFF;
+    beacon_data.rain = rain & 0x1FFF;
+    beacon_data.wind = wind_speed;
 
-    // TODO - Send windspeed
+    // Send wind direction in top 4 bits of rain data
+    beacon_data.rain |= ((wind_dir/225) << 12) & 0xF000;
 
     console_printf( "ws: %d.%d kph @ %d.%d\n",
                         wind_speed/1000,
