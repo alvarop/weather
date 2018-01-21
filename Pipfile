@@ -9,6 +9,8 @@ name = "pypi"
 
 "94e5ecf" = {path = "sw/lib/bglib", editable = true}
 pyserial = "*"
+matplotlib = "*"
+numpy = "*"
 
 
 [dev-packages]
