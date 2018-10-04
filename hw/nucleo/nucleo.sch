@@ -4,10 +4,10 @@ EELAYER END
 $Descr A3 16535 11693
 encoding utf-8
 Sheet 1 1
-Title ""
-Date ""
-Rev ""
-Comp ""
+Title "Nucleo Weather Breakout"
+Date "2018-10-04"
+Rev "0.1"
+Comp "@alvaroprieto"
 Comment1 ""
 Comment2 ""
 Comment3 ""
@@ -19,7 +19,7 @@ U 1 1 5BA97D1D
 P 1500 1700
 F 0 "J1" H 1420 2117 50  0000 C CNN
 F 1 "Rain" H 1420 2026 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical" H 1500 1700 50  0001 C CNN
+F 2 "alvarop:RJ11" H 1500 1700 50  0001 C CNN
 F 3 "~" H 1500 1700 50  0001 C CNN
 	1    1500 1700
 	-1   0    0    -1  
@@ -30,7 +30,7 @@ U 1 1 5BA97E0B
 P 1500 3150
 F 0 "J2" H 1420 3567 50  0000 C CNN
 F 1 "Wind" H 1420 3476 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical" H 1500 3150 50  0001 C CNN
+F 2 "alvarop:RJ11" H 1500 3150 50  0001 C CNN
 F 3 "~" H 1500 3150 50  0001 C CNN
 	1    1500 3150
 	-1   0    0    -1  
@@ -871,7 +871,7 @@ NoConn ~ 6500 7100
 NoConn ~ 10000 6900
 Wire Wire Line
 	7700 7800 8100 7800
-Text Label 8100 7800 2    50   ~ 0
+Text Label 8100 7900 2    50   ~ 0
 WDIR
 Wire Wire Line
 	6500 8100 6000 8100
@@ -899,7 +899,7 @@ Text Label 9600 8000 0    50   ~ 0
 GPS_TXD
 Wire Wire Line
 	7700 7900 8100 7900
-Text Label 8100 7900 2    50   ~ 0
+Text Label 8100 7800 2    50   ~ 0
 LIGHT
 Wire Wire Line
 	11000 7800 11600 7800
@@ -960,9 +960,7 @@ Wire Wire Line
 Connection ~ 5200 3800
 Text Label 4800 3800 0    50   ~ 0
 XB_nRST
-Wire Wire Line
-	6500 6500 6100 6500
-Text Label 6100 6500 0    50   ~ 0
+Text Label 8200 6500 2    50   ~ 0
 XB_nRST
 Wire Wire Line
 	7000 3400 7400 3400
@@ -970,7 +968,7 @@ Text Label 7400 3400 2    50   ~ 0
 XB_ON
 Wire Wire Line
 	7700 6500 8200 6500
-Text Label 8200 6500 2    50   ~ 0
+Text Label 9600 6500 0    50   ~ 0
 XB_ON
 NoConn ~ 6500 6600
 NoConn ~ 6500 6700
@@ -985,7 +983,6 @@ NoConn ~ 7700 7100
 NoConn ~ 7700 7000
 NoConn ~ 7700 6900
 NoConn ~ 10000 6400
-NoConn ~ 10000 6500
 NoConn ~ 10000 6600
 NoConn ~ 10000 6700
 NoConn ~ 10000 7000
@@ -1030,10 +1027,10 @@ Wire Wire Line
 Text Label 9600 7900 0    50   ~ 0
 GPS_PPS
 $Comp
-L power:PWR_FLAG #FLG?
+L power:PWR_FLAG #FLG0101
 U 1 1 5BC7DA90
 P 7900 7200
-F 0 "#FLG?" H 7900 7275 50  0001 C CNN
+F 0 "#FLG0101" H 7900 7275 50  0001 C CNN
 F 1 "PWR_FLAG" H 7900 7374 50  0000 C CNN
 F 2 "" H 7900 7200 50  0001 C CNN
 F 3 "~" H 7900 7200 50  0001 C CNN
@@ -1044,10 +1041,10 @@ Connection ~ 7900 7200
 Wire Wire Line
 	7900 7200 7700 7200
 $Comp
-L power:PWR_FLAG #FLG?
+L power:PWR_FLAG #FLG0102
 U 1 1 5BC7DCAA
 P 6050 7300
-F 0 "#FLG?" H 6050 7375 50  0001 C CNN
+F 0 "#FLG0102" H 6050 7375 50  0001 C CNN
 F 1 "PWR_FLAG" H 6050 7474 50  0000 C CNN
 F 2 "" H 6050 7300 50  0001 C CNN
 F 3 "~" H 6050 7300 50  0001 C CNN
@@ -1057,4 +1054,7 @@ $EndComp
 Connection ~ 6050 7300
 Wire Wire Line
 	6050 7300 5700 7300
+Wire Wire Line
+	10000 6500 9600 6500
+NoConn ~ 6500 6500
 $EndSCHEMATC
