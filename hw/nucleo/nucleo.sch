@@ -672,30 +672,28 @@ Wire Wire Line
 NoConn ~ 10050 2550
 NoConn ~ 10050 2650
 NoConn ~ 10050 2750
-NoConn ~ 12700 3150
-NoConn ~ 12700 3250
 NoConn ~ 10050 2050
 NoConn ~ 10050 2150
 NoConn ~ 12700 1950
 Wire Wire Line
 	11250 2850 11650 2850
-Text Label 11650 2950 2    50   ~ 0
+Text Label 11650 2850 2    50   ~ 0
 WDIR
 Wire Wire Line
-	10050 3150 9550 3150
+	10050 1550 9650 1550
 Wire Wire Line
-	10050 3250 9550 3250
-Text Label 9550 3150 0    50   ~ 0
+	11250 1550 11600 1550
+Text Label 9650 1550 0    50   ~ 0
 WSPEED
-Text Label 9550 3250 0    50   ~ 0
+Text Label 11600 1550 2    50   ~ 0
 RAIN
 Wire Wire Line
 	10050 1450 9650 1450
 Wire Wire Line
-	11250 1450 11750 1450
+	11250 1450 11600 1450
 Text Label 9650 1450 0    50   ~ 0
 XB_RX
-Text Label 11750 1450 2    50   ~ 0
+Text Label 11600 1450 2    50   ~ 0
 XB_TX
 Wire Wire Line
 	12700 2450 12300 2450
@@ -707,15 +705,15 @@ Text Label 12300 3050 0    50   ~ 0
 GPS_TXD
 Wire Wire Line
 	11250 2950 11650 2950
-Text Label 11650 2850 2    50   ~ 0
+Text Label 11650 2950 2    50   ~ 0
 LIGHT
 Wire Wire Line
-	13700 2850 14300 2850
+	12700 1550 12300 1550
 Wire Wire Line
-	13700 2750 14300 2750
-Text Label 14300 2750 2    50   ~ 0
+	12700 1650 12300 1650
+Text Label 12300 1650 0    50   ~ 0
 SDA
-Text Label 14300 2850 2    50   ~ 0
+Text Label 12300 1550 0    50   ~ 0
 SCL
 Wire Wire Line
 	11400 4250 11000 4250
@@ -768,16 +766,14 @@ Wire Wire Line
 Connection ~ 11000 5350
 Text Label 10600 5350 0    50   ~ 0
 XB_nRST
-Text Label 11750 1550 2    50   ~ 0
+Text Label 14100 1550 2    50   ~ 0
 XB_nRST
 Wire Wire Line
 	12800 4950 13200 4950
 Text Label 13200 4950 2    50   ~ 0
 XB_ON
 Wire Wire Line
-	11250 1550 11750 1550
-Text Label 12300 1550 0    50   ~ 0
-XB_ON
+	12700 1450 12300 1450
 NoConn ~ 10050 1650
 NoConn ~ 10050 1750
 NoConn ~ 10050 2450
@@ -790,14 +786,11 @@ NoConn ~ 11250 2550
 NoConn ~ 11250 2150
 NoConn ~ 11250 2050
 NoConn ~ 11250 1950
-NoConn ~ 12700 1450
-NoConn ~ 12700 1650
 NoConn ~ 12700 1750
 NoConn ~ 12700 2050
 NoConn ~ 12700 2150
 NoConn ~ 12700 2250
 NoConn ~ 12700 2350
-NoConn ~ 12700 2850
 NoConn ~ 13700 3050
 NoConn ~ 13700 2950
 NoConn ~ 13700 2650
@@ -809,10 +802,7 @@ NoConn ~ 13700 2050
 NoConn ~ 13700 1950
 NoConn ~ 13700 1750
 NoConn ~ 13700 1650
-NoConn ~ 13700 1550
-NoConn ~ 13700 1450
 NoConn ~ 11250 3150
-NoConn ~ 11250 3250
 NoConn ~ 11250 1650
 NoConn ~ 10050 2250
 NoConn ~ 12000 4550
@@ -827,8 +817,8 @@ NoConn ~ 12800 4450
 NoConn ~ 12800 4350
 NoConn ~ 12800 4250
 Wire Wire Line
-	12700 2950 12300 2950
-Text Label 12300 2950 0    50   ~ 0
+	10050 3250 9650 3250
+Text Label 9650 3150 0    50   ~ 0
 GPS_PPS
 $Comp
 L power:PWR_FLAG #FLG0101
@@ -858,8 +848,6 @@ $EndComp
 Connection ~ 9600 2350
 Wire Wire Line
 	9600 2350 9250 2350
-Wire Wire Line
-	12700 1550 12300 1550
 $Comp
 L Device:C_Small C10
 U 1 1 5BE7FE9B
@@ -958,8 +946,8 @@ Wire Wire Line
 Text Label 11650 5050 0    50   ~ 0
 XB_nSBY
 Wire Wire Line
-	10050 1550 9650 1550
-Text Label 9650 1550 0    50   ~ 0
+	13700 1550 14100 1550
+Text Label 14100 1450 2    50   ~ 0
 XB_nSBY
 $Comp
 L Connector_Generic:Conn_01x02 J2
@@ -1566,9 +1554,17 @@ F 3 "~" H 4900 1300 50  0001 C CNN
 $EndComp
 Connection ~ 4900 1300
 Wire Wire Line
-	12300 2550 12700 2550
-Text Label 12300 2550 0    50   ~ 0
+	9650 3150 10050 3150
+Text Label 12300 3250 0    50   ~ 0
 GPS_FIX
+Wire Wire Line
+	11250 3250 11650 3250
+Wire Wire Line
+	12700 3250 12300 3250
+Text Label 9650 3250 0    50   ~ 0
+GPS_nRST
+Text Label 11650 3250 2    50   ~ 0
+GPS_SBY
 $Comp
 L alvarop:NUCLEO_L476RG U2
 U 2 1 5BAE1FF6
@@ -1580,12 +1576,16 @@ F 3 "" H 12700 1450 50  0001 C CNN
 	2    12700 1450
 	1    0    0    -1  
 $EndComp
+NoConn ~ 12700 2550
+NoConn ~ 12700 2650
+NoConn ~ 12700 2750
+NoConn ~ 12700 2850
+NoConn ~ 12700 2950
+NoConn ~ 12700 3150
 Wire Wire Line
-	12700 2650 12300 2650
-Wire Wire Line
-	12700 2750 12300 2750
-Text Label 12300 2650 0    50   ~ 0
-GPS_nRST
-Text Label 12300 2750 0    50   ~ 0
-GPS_SBY
+	13700 1450 14100 1450
+Text Label 12300 1450 0    50   ~ 0
+XB_ON
+NoConn ~ 13700 2750
+NoConn ~ 13700 2850
 $EndSCHEMATC
