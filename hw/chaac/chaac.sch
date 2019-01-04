@@ -6,7 +6,7 @@ $Descr A3 16535 11693
 encoding utf-8
 Sheet 1 1
 Title "Chaac"
-Date "2019-01-02"
+Date "2019-01-03"
 Rev "1.0"
 Comp "@alvaroprieto"
 Comment1 ""
@@ -549,7 +549,7 @@ Wire Wire Line
 Connection ~ 12500 1900
 Wire Wire Line
 	8400 3200 8800 3200
-Text Label 8800 3200 2    50   ~ 0
+Text Label 6300 3400 0    50   ~ 0
 WDIR
 Wire Wire Line
 	8400 3400 8800 3400
@@ -917,19 +917,6 @@ F 5 " RC0603JR-074K7L" H -250 2900 50  0001 C CNN "MPN"
 $EndComp
 Wire Wire Line
 	3100 7550 3100 7750
-$Comp
-L power:+3.3V #PWR0123
-U 1 1 5C2B14C9
-P 3100 7300
-F 0 "#PWR0123" H 3100 7150 50  0001 C CNN
-F 1 "+3.3V" H 3115 7473 50  0000 C CNN
-F 2 "" H 3100 7300 50  0001 C CNN
-F 3 "" H 3100 7300 50  0001 C CNN
-	1    3100 7300
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3100 7300 3100 7350
 Text Label 3200 7750 0    50   ~ 0
 WDIR
 $Comp
@@ -1294,7 +1281,7 @@ Text Label 6300 3900 0    50   ~ 0
 UART_TX
 Text Label 6300 4000 0    50   ~ 0
 UART_RX
-Text Label 6300 3400 0    50   ~ 0
+Text Label 8800 3200 2    50   ~ 0
 BATT
 Wire Wire Line
 	6700 3400 6300 3400
@@ -1673,9 +1660,9 @@ F 3 "~" H 14750 8250 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	14250 7600 13650 7600
+	14250 7600 13750 7600
 Wire Wire Line
-	13650 7800 14100 7800
+	13650 7800 13850 7800
 Wire Wire Line
 	14100 7800 14100 7900
 Wire Wire Line
@@ -2025,7 +2012,6 @@ F 3 "" H 10050 6300 50  0001 C CNN
 	1    10050 6300
 	1    0    0    -1  
 $EndComp
-NoConn ~ 8400 3900
 $Comp
 L power:PWR_FLAG #FLG0106
 U 1 1 5D5441BD
@@ -2051,7 +2037,7 @@ Wire Wire Line
 Connection ~ 12100 6150
 Wire Wire Line
 	12100 6150 12950 6150
-Text Label 8800 3800 2    50   ~ 0
+Text Label 8800 3900 2    50   ~ 0
 LED1
 $Comp
 L Device:R_Small R25
@@ -2099,8 +2085,8 @@ LED1
 Wire Wire Line
 	5200 4500 5200 4550
 Wire Wire Line
-	6700 3800 6300 3800
-Text Label 6300 3800 0    50   ~ 0
+	8400 3800 8800 3800
+Text Label 8800 3800 2    50   ~ 0
 FAN_EN
 $Comp
 L alvarop:XCL102 U7
@@ -2395,11 +2381,58 @@ F 3 "" H 4250 2150 50  0001 C CNN
 	1    4250 2150
 	0    1    1    0   
 $EndComp
-Text Label 4300 2350 2    50   ~ 0
-GPS_SBY
 Text Label 4300 2250 2    50   ~ 0
+GPS_SBY
+Text Label 4300 2350 2    50   ~ 0
 GPS_TX
 Wire Wire Line
-	8400 3800 8800 3800
-NoConn ~ 6700 3500
+	8400 3900 8800 3900
+Wire Wire Line
+	6700 3500 6300 3500
+Text Label 6300 3500 0    50   ~ 0
+WDIR_EN
+Text Label 3500 7200 2    50   ~ 0
+WDIR_EN
+Wire Wire Line
+	3100 7200 3500 7200
+Wire Wire Line
+	3100 7200 3100 7350
+Wire Wire Line
+	13950 8250 13950 8600
+Wire Wire Line
+	13950 8600 14600 8600
+Connection ~ 13950 8250
+Wire Wire Line
+	13850 7800 13850 8700
+Wire Wire Line
+	13850 8700 14600 8700
+Connection ~ 13850 7800
+Wire Wire Line
+	13850 7800 14100 7800
+Wire Wire Line
+	13750 7600 13750 8800
+Wire Wire Line
+	13750 8800 14600 8800
+Connection ~ 13750 7600
+Wire Wire Line
+	13750 7600 13650 7600
+Text Label 14600 8700 2    50   ~ 0
+STAT1
+Text Label 14600 8600 2    50   ~ 0
+STAT2
+Text Label 14600 8800 2    50   ~ 0
+nPG
+Wire Wire Line
+	6700 3600 6300 3600
+Wire Wire Line
+	6700 3700 6300 3700
+Wire Wire Line
+	6700 3800 6300 3800
+Text Label 6300 3600 0    50   ~ 0
+STAT1
+Text Label 6300 3700 0    50   ~ 0
+STAT2
+Text Label 6300 3800 0    50   ~ 0
+nPG
+NoConn ~ 8400 4200
 $EndSCHEMATC
